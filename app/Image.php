@@ -23,5 +23,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Image extends Model
 {
-    //
+    protected $fillable = ['wall_id', 'path', 'name'];
 }

@@ -18,8 +18,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Like whereWallId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Like whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Like whereUpdatedAt($value)
+ * @property string $type
+ * @property integer $type_id
+ * @method static \Illuminate\Database\Query\Builder|\App\Like whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Like whereTypeId($value)
  */
 class Like extends Model
 {
-    //
+    protected $fillable = ['user_id', 'type', 'type_id'];
 }

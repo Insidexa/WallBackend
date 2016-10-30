@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLikesTable extends Migration
+class CreateIgnoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreateLikesTable extends Migration
      */
     public function up()
     {
-        Schema::create('likes', function (Blueprint $table) {
+        Schema::create('ignores', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('wall_id')->unique();
             $table->integer('user_id');
-            $table->enum('type', ['wall', 'comment']);
-            $table->integer('type_id');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateLikesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('likes');
+        Schema::drop('ignores');
     }
 }

@@ -22,6 +22,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Wall[] $walls
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Like[] $likes
  */
 class User extends Authenticatable
 {
@@ -42,4 +44,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function walls()
+    {
+        return $this->hasMany(Wall::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }
