@@ -1,6 +1,6 @@
 <?php
 
-namespace Helpers\JSocket;
+namespace Socket;
 
 use App;
 use Auth;
@@ -10,24 +10,22 @@ use App\User;
 use Faker\Provider\Image;
 use Illuminate\Session\SessionManager;
 
-use App\Like;
+
 use App\Wall;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use Repositories\CommentRepository;
+use Repositories\ImageRepository;
+use Repositories\LikeRepository;
+use Repositories\WallRepository;
 
-function lc($text)
-{
-    echo $text . PHP_EOL;
-}
-
-class JSocket implements MessageComponentInterface
+class WallSocket implements MessageComponentInterface
 {
 
     /**
      * @var array
      */
     protected $users;
-    protected $walls;
 
     public function __construct()
     {
@@ -62,15 +60,6 @@ class JSocket implements MessageComponentInterface
         });
 
         $this->users = [];
-        $this->walls = [];
-
-        $this->initWalls();
-    }
-
-    protected function initWalls()
-    {
-        $this->walls = Wall::all();
-        lc('walls');
     }
 
     public function onOpen(ConnectionInterface $connection)
@@ -92,73 +81,44 @@ class JSocket implements MessageComponentInterface
     }
 
     protected function like($data) {
-        $like = Like::whereTypeId($data->type_id)
-            ->whereUserId($data->user_id)
-            ->whereType($data->type);
-
-        if ($like->get()->count() == 0) {
-            Like::create([
-                'type_id' => $data->type_id,
-                'user_id' => $data->user_id,
-                'type' => $data->type
-            ]);
-            $action = true;
-        } else {
-            $like->delete();
-            $action = false;
-        }
-
-        return [
-            'count' => $like
-                ->get()
-                ->count(),
-            'type' => $data->type,
-            'action' => $action,
-            'type_id' => $data->type_id,
-            'wall_id' => $data->wall_id
-        ];
+        return LikeRepository::like($data);
     }
 
     protected function removeWall($id) {
-        Wall::find($id)->delete();
+        WallRepository::delete($id);
+        ImageRepository::deleteWhereWallId($id);
+        CommentRepository::deleteWhereWallId($id);
+        LikeRepository::deleteWhereWallId($id);
     }
 
     protected function addWall ($wallData) {
+        $wall = WallRepository::create($wallData);
+        ImageRepository::create($wallData, $wall->id);
         
-        $wall = Wall::create([
-            'user_id' => 1,
-            'text' => $wallData->text
-        ]);
-        $images = [];
-
-        foreach($wallData->images as $image) {
-            $images[] = [
-                'path' => \Helpers\ImageFromBase64::convertAndSave($image->image),
-                'wall_id' => $wall->id,
-                'name' => ''
-            ];
-        }
-        
-        \App\Image::insert($images);
-        
-        return $wall->whereId($wall->id)->with('user')->with('images')->with('comments')->first();
+        return WallRepository::get($wall->id);
     }
 
     protected function addComment($commentData) {
         
-        $parentId = 0;
-        
-        if ($commentData->comment->parent_id)
-            $parentId = $commentData->comment->parent_id;
-        
-        return \App\Comment::create([
+        return CommentRepository::create($commentData);
+    }
+
+    protected function noInteresting($id) {
+        return App\Ignore::create([
             'user_id' => 1,
-            'wall_id' => $commentData->wall_id,
-            'text' => $commentData->comment->text,
-            'parent_id' => $parentId
+            'wall_id' => $id
         ]);
     }
 
+    protected function removeComment($data) {
+        CommentRepository::delete($data);
+        LikeRepository::deleteWhereData($data);
+    }
+    
+    protected function updateComment($comment) {
+        return CommentRepository::update($comment);
+    }
+    
     public function onMessage(ConnectionInterface $from, $message)
     {
         /*$from->session->start();
@@ -220,6 +180,37 @@ class JSocket implements MessageComponentInterface
                 }
                 break;
 
+            case 'user_no_interesting':
+                $this->noInteresting($userMessage->id);
+                $from->send(json_encode([
+                    'response' => $userMessage->id,
+                    'action' => 'client_no_interesting'
+                ]));
+                break;
+
+            case 'user_remove_comment':
+                $this->removeComment($userMessage);
+                foreach ($this->users as $resourceId => $client) {
+                    $client['connection']->send(json_encode([
+                        'response' => [
+                            'wall_id' => $userMessage->wall_id,
+                            'comment_id' => $userMessage->comment_id
+                        ],
+                        'action' => 'client_remove_comment'
+                    ]));
+                }
+                break;
+            
+            case 'user_update_comment':
+                $comment = $this->updateComment($userMessage->comment);
+                foreach ($this->users as $resourceId => $client) {
+                    $client['connection']->send(json_encode([
+                        'response' => $comment,
+                        'action' => 'client_update_comment'
+                    ]));
+                }
+                break;
+            
             default:
                 $this->onClose($from);
                 break;

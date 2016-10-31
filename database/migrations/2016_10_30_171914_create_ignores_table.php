@@ -14,7 +14,7 @@ class CreateIgnoresTable extends Migration
     {
         Schema::create('ignores', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('wall_id')->unique();
+            $table->integer('wall_id');
             $table->integer('user_id');
             $table->timestamps();
         });

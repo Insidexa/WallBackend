@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read mixed $likes
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Image[] $images
+ * @property-read mixed $is_liked
+ * @property-read mixed $is_no_interesting
  */
 class Wall extends Model
 {
@@ -33,6 +35,7 @@ class Wall extends Model
         $array = parent::toArray();
         $array['likes'] = $this->likes;
         $array['is_liked'] = $this->is_liked;
+        $array['is_no_interesting'] = $this->is_no_interesting;
         return $array;
     }
 
@@ -49,6 +52,11 @@ class Wall extends Model
     public function getLikesAttribute()
     {
         return Like::whereType('wall')->whereTypeId($this->id)->count();
+    }
+
+    public function getIsNoInterestingAttribute()
+    {
+        return Ignore::whereUserId(1)->whereWallId($this->id)->count();
     }
     
     public function comments()

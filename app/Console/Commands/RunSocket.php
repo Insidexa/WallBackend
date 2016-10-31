@@ -4,11 +4,10 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use Helpers\JSocket;
-
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
+use Socket\WallSocket;
 
 class RunSocket extends Command
 {
@@ -47,7 +46,7 @@ class RunSocket extends Command
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
-                    new JSocket\JSocket()
+                    new WallSocket()
                 )
             ), 8082
         );

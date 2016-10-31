@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 /**
  * App\Comment
  *
- * @mixin \Eloquent
  * @property integer $id
  * @property integer $user_id
  * @property integer $wall_id
@@ -15,6 +15,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $text
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property-read mixed $is_liked
+ * @property-read mixed $likes
+ * @property-read \App\User $user
+ * @property-read \App\Wall $wall
  * @method static \Illuminate\Database\Query\Builder|\App\Comment whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Comment whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Comment whereWallId($value)
@@ -22,13 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Comment whereText($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Comment whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Comment whereUpdatedAt($value)
- * @property string $type
- * @property integer $type_id
- * @property-read mixed $likes
- * @property-read \App\User $user
- * @property-read \App\Wall $wall
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereTypeId($value)
+ * @mixin \Eloquent
  */
 class Comment extends Model
 {
@@ -55,7 +53,7 @@ class Comment extends Model
     
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
     }
     
     public function wall()
