@@ -118,6 +118,11 @@ class WallSocket implements MessageComponentInterface
     protected function updateComment($comment) {
         return CommentRepository::update($comment);
     }
+
+    protected function updateWall($wallData) {
+        ImageRepository::checkImages($wallData);
+        return WallRepository::update($wallData);
+    }
     
     public function onMessage(ConnectionInterface $from, $message)
     {
@@ -156,6 +161,16 @@ class WallSocket implements MessageComponentInterface
                     $client['connection']->send(json_encode([
                         'response' => $comment,
                         'action' => 'client_add_comment'
+                    ]));
+                }
+                break;
+
+            case 'user_update_wall':
+                $wall = $this->updateWall($userMessage->wall);
+                foreach ($this->users as $resourceId => $client) {
+                    $client['connection']->send(json_encode([
+                        'response' => $wall,
+                        'action' => 'client_update_wall'
                     ]));
                 }
                 break;

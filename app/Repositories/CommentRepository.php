@@ -10,9 +10,17 @@ namespace Repositories;
 
 use App\Comment;
 
+/**
+ * Class CommentRepository
+ * @package Repositories
+ */
 class CommentRepository
 {
 
+    /**
+     * @param \stdClass $comment
+     * @return $this|bool
+     */
     public static function update($comment)
     {
         $comment = Comment::find($comment->id)->fill([
@@ -22,7 +30,7 @@ class CommentRepository
     }
 
     /**
-     * @param $id
+     * @param int $id
      */
     public static function deleteWhereWallId($id)
     {
@@ -30,7 +38,7 @@ class CommentRepository
     }
 
     /**
-     * @param $data
+     * @param \stdClass $data
      * @return void
      */
     public static function delete($data)
@@ -41,7 +49,7 @@ class CommentRepository
     }
 
     /**
-     * @param $commentData
+     * @param \stdClass $commentData
      * @return Comment|\Exception
      */
     public static function create($commentData)

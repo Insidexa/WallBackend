@@ -24,4 +24,15 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     protected $fillable = ['wall_id', 'path', 'name'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($image) {
+            $path = public_path() . '/' . $image->path;
+            if (\File::exists($path))
+                \File::delete($path);
+        });
+    }
 }

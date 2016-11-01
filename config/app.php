@@ -163,6 +163,8 @@ return [
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
+        Collective\Bus\BusServiceProvider::class,
+
     ],
 
     /*

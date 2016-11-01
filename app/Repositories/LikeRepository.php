@@ -13,21 +13,21 @@ use \App\Like;
 class LikeRepository
 {
     /**
-     * @param $data
+     * @param \stdClass $data
      */
     public static function deleteWhereData ($data) {
         Like::whereTypeId($data->commend_id)->whereType('comment')->delete();
     }
     
     /**
-     * @param $id
+     * @param int $id
      */
     public static function deleteWhereWallId($id) {
         Like::whereTypeId($id)->whereType('wall')->delete();
     } 
     
     /**
-     * @param $data
+     * @param \stdClass $data
      * @return array
      */
     public static function like ($data) {

@@ -11,11 +11,25 @@ namespace Repositories;
 use App\Like;
 use \App\Wall;
 
+/**
+ * Class WallRepository
+ * @package Repositories
+ */
 class WallRepository
 {
+    /**
+     * @param $wallData
+     * @return \Illuminate\Database\Eloquent\Model|null|WallRepository
+     */
+    public static function update($wallData) {
+        Wall::find($wallData->id)->update([
+            'text' => $wallData->text
+        ]);
+        return static::get($wallData->id);
+    }
 
     /**
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Database\Eloquent\Model|null|static
      */
     public static function get($id) {
@@ -23,7 +37,7 @@ class WallRepository
     }
     
     /**
-     * @param $id
+     * @param int $id
      * @throws \Exception
      */
     public static function delete($id) {
@@ -31,7 +45,7 @@ class WallRepository
     }
 
     /**
-     * @param $wallData
+     * @param \stdClass $wallData
      * @return Wall
      */
     public static function create($wallData) {
