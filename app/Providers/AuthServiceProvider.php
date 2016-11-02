@@ -35,7 +35,6 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         \Gate::define('update-post', function ($user, $postUserId) {
-            echo $user->id  . '-' . $postUserId;
             return $user->id == $postUserId;
         });
 

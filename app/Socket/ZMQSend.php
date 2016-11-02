@@ -14,17 +14,33 @@ namespace Socket;
  */
 class ZMQSend
 {
+    /**
+     * @var \ZMQSocket|null
+     */
+    protected static $connection = null;
+
+    /**
+     * @param array|string|int $data
+     */
     public static function send($data) {
         try {
-            $context = new \ZMQContext();
-            $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, 'my pusher');
-            $socket->connect("tcp://localhost:5555");
-
             $data['category'] = 'wall';
-            
-            $socket->send(json_encode($data));
+            self::getConnection()->send(json_encode($data));
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
+    }
+
+    /**
+     * @return null|\ZMQSocket
+     */
+    public static function getConnection () {
+        if (self::$connection === null) {
+            $context = new \ZMQContext();
+            $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, 'my pusher');
+            self::$connection = $socket->connect("tcp://localhost:5555");
+        }
+        
+        return self::$connection;
     }
 }

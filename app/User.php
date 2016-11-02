@@ -46,16 +46,34 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * @var array
+     */
+    public static $rules = [
+        'name' => 'required|min:3',
+        'email' => 'required|email',
+        'password' => 'required|min:6'
+    ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function walls()
     {
         return $this->hasMany(Wall::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function likes()
     {
         return $this->hasMany(Like::class);

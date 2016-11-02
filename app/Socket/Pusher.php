@@ -45,21 +45,17 @@ class Pusher implements WampServerInterface {
      * @param ConnectionInterface $conn
      * @param \Ratchet\Wamp\Topic|string $topic
      */
-    public function onUnSubscribe(ConnectionInterface $conn, $topic) {
-    }
+    public function onUnSubscribe(ConnectionInterface $conn, $topic) {}
 
     /**
      * @param ConnectionInterface $conn
      */
-    public function onOpen(ConnectionInterface $conn) {
-        echo __FUNCTION__ . PHP_EOL;
-    }
+    public function onOpen(ConnectionInterface $conn) {}
 
     /**
      * @param ConnectionInterface $conn
      */
-    public function onClose(ConnectionInterface $conn) {
-    }
+    public function onClose(ConnectionInterface $conn) {}
 
     /**
      * @param ConnectionInterface $conn
@@ -89,5 +85,6 @@ class Pusher implements WampServerInterface {
      * @param \Exception $e
      */
     public function onError(ConnectionInterface $conn, \Exception $e) {
+        $conn->close();
     }
 }

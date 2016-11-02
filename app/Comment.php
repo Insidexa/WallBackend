@@ -35,10 +35,8 @@ class Comment extends Model
     protected $appends = ['likes', 'is_liked', 'user'];
 
     public static $rules = [
-        'comment' => [
-            'parent_id' => 'integer',
-            'text' => 'required',
-        ],
+        'comment.parent_id' => 'integer',
+        'comment.text' => 'required|min:1',
         'wall_id' => 'integer|required',
     ];
 

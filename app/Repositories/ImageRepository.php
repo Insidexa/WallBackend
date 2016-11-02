@@ -42,7 +42,7 @@ class ImageRepository
         $images = [];
 
         foreach($wallData['images'] as $image) {
-            if ($image['image']) {
+            if (isset($image['image'])) {
                 $images[] = [
                     'path' => ImageFromBase64::convertAndSave($image['image']),
                     'wall_id' => $wallId,
