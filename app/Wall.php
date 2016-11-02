@@ -30,13 +30,25 @@ use Socket\WallSocket;
  */
 class Wall extends Model
 {
+    /**
+     * @var array
+     */
     protected $fillable = ['user_id', 'text'];
+    /**
+     * @var array
+     */
     protected $appends = ['likes', 'is_liked'];
 
+    /**
+     * @var array
+     */
     public static $rules = [
         'text' => 'required|min:1'
     ];
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         $array = parent::toArray();
@@ -46,11 +58,17 @@ class Wall extends Model
         return $array;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return int
+     */
     public function getIsLikedAttribute()
     {
         return Like::whereUserId(UserData::getUser()->id)
@@ -59,6 +77,9 @@ class Wall extends Model
             ->count();
     }
 
+    /**
+     * @return int
+     */
     public function getLikesAttribute()
     {
         return Like::whereType('wall')
@@ -66,18 +87,27 @@ class Wall extends Model
             ->count();
     }
 
+    /**
+     * @return bool
+     */
     public function getIsNoInterestingAttribute()
     {
         return Ignore::whereUserId(UserData::getUser()->id)
             ->whereWallId($this->id)
-            ->count();
+            ->exists();
     }
-    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function images()
     {
         return $this->hasMany(Image::class);
