@@ -8,8 +8,10 @@
 
 namespace Repositories;
 
-use App\Like;
 use \App\Wall;
+
+use Helpers\UserData;
+use Socket\WallSocket;
 
 /**
  * Class WallRepository
@@ -17,15 +19,27 @@ use \App\Wall;
  */
 class WallRepository
 {
+    public static function getUserId($id) {
+        return Wall::select(['user_id'])->whereId($id)->first()->user_id;
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public static function all() {
+        return Wall::with('user')->with('images')->with('comments')->get();
+    }
+
     /**
      * @param $wallData
+     * @param $id
      * @return \Illuminate\Database\Eloquent\Model|null|WallRepository
      */
-    public static function update($wallData) {
-        Wall::find($wallData->id)->update([
-            'text' => $wallData->text
+    public static function update($wallData, $id) {
+        Wall::find($id)->update([
+            'text' => $wallData['text']
         ]);
-        return static::get($wallData->id);
+        return static::get($id);
     }
 
     /**
@@ -45,13 +59,13 @@ class WallRepository
     }
 
     /**
-     * @param \stdClass $wallData
+     * @param array $wallData
      * @return Wall
      */
-    public static function create($wallData) {
+    public static function create(array $wallData) {
         return Wall::create([
-            'user_id' => 1,
-            'text' => $wallData->text
+            'user_id' => UserData::getUser()->id,
+            'text' => $wallData['text']
         ]);
     }
 }

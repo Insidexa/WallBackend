@@ -9,6 +9,8 @@
 namespace Repositories;
 
 use App\Comment;
+use Helpers\UserData;
+use Socket\WallSocket;
 
 /**
  * Class CommentRepository
@@ -16,15 +18,24 @@ use App\Comment;
  */
 class CommentRepository
 {
-
     /**
-     * @param \stdClass $comment
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Collection|mixed|static[]
+     */
+    public static function getUserId ($id) {
+        return Comment::select(['user_id'])->find($id)->first()->user_id;
+    }
+    
+    /**
+     * @param $comment
+     * @param $id
      * @return $this|bool
      */
-    public static function update($comment)
+    public static function update($comment, $id)
     {
-        $comment = Comment::find($comment->id)->fill([
-            'text' => $comment->text
+        $comment = Comment::find($id)->fill([
+            'text' => $comment['text'],
+            'user_id' => UserData::getUser()->id
         ]);
         return ($comment->update()) ? $comment : false;
     }
@@ -38,31 +49,31 @@ class CommentRepository
     }
 
     /**
-     * @param \stdClass $data
-     * @return void
+     * @param $id
+     * @param $wallId
      */
-    public static function delete($data)
+    public static function delete($id, $wallId)
     {
-        Comment::whereId($data->comment_id)
-            ->whereWallId($data->wall_id)
+        Comment::whereId($id)
+            ->whereWallId($wallId)
             ->delete();
     }
 
     /**
-     * @param \stdClass $commentData
+     * @param array $commentData
      * @return Comment|\Exception
      */
-    public static function create($commentData)
+    public static function create(array $commentData)
     {
         $parentId = 0;
 
-        if ($commentData->comment->parent_id)
-            $parentId = $commentData->comment->parent_id;
+        if (isset($commentData['comment']['parent_id']))
+            $parentId = $commentData['comment']['parent_id'];
 
         return Comment::create([
-            'user_id' => 1,
-            'wall_id' => $commentData->wall_id,
-            'text' => $commentData->comment->text,
+            'user_id' => UserData::getUser()->id,
+            'wall_id' => $commentData['wall_id'],
+            'text' => $commentData['comment']['text'],
             'parent_id' => $parentId
         ]);
     }

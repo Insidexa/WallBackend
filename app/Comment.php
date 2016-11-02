@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Helpers\UserData;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -31,29 +32,43 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     protected $fillable = ['user_id', 'parent_id', 'text', 'wall_id'];
-    protected $appends = ['likes', 'is_liked'];
+    protected $appends = ['likes', 'is_liked', 'user'];
+
+    public static $rules = [
+        'comment' => [
+            'parent_id' => 'integer',
+            'text' => 'required',
+        ],
+        'wall_id' => 'integer|required',
+    ];
 
     public function toArray()
     {
         $array = parent::toArray();
         $array['likes'] = $this->likes;
         $array['is_liked'] = $this->is_liked;
+        $array['user'] = $this->user;
         return $array;
     }
 
     public function getIsLikedAttribute()
     {
-        return Like::whereUserId(1)->whereType('comment')->whereTypeId($this->id)->count();
+        return Like::whereUserId(UserData::getUser()->id)
+            ->whereType('comment')
+            ->whereTypeId($this->id)
+            ->count();
     }
 
     public function getLikesAttribute()
     {
-        return Like::whereType('comment')->whereTypeId($this->id)->count();
+        return Like::whereType('comment')
+            ->whereTypeId($this->id)
+            ->count();
     }
     
-    public function user()
+    public function getUserAttribute()
     {
-        return $this->hasOne(User::class);
+        return User::whereId($this->user_id)->firstOrFail();
     }
     
     public function wall()

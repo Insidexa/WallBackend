@@ -9,14 +9,19 @@
 namespace Repositories;
 
 use \App\Like;
+use Helpers\UserData;
 
+/**
+ * Class LikeRepository
+ * @package Repositories
+ */
 class LikeRepository
 {
     /**
-     * @param \stdClass $data
+     * @param int $commentId
      */
-    public static function deleteWhereData ($data) {
-        Like::whereTypeId($data->commend_id)->whereType('comment')->delete();
+    public static function deleteWhereData ($commentId) {
+        Like::whereTypeId($commentId)->whereType('comment')->delete();
     }
     
     /**
@@ -27,19 +32,19 @@ class LikeRepository
     } 
     
     /**
-     * @param \stdClass $data
+     * @param array $data
      * @return array
      */
-    public static function like ($data) {
-        $like = Like::whereTypeId($data->type_id)
-            ->whereUserId($data->user_id)
-            ->whereType($data->type);
+    public static function like (array $data) {
+        $like = Like::whereTypeId($data['type_id'])
+            ->whereUserId(UserData::getUser()->id)
+            ->whereType($data['type']);
 
         if ($like->get()->count() == 0) {
             Like::create([
-                'type_id' => $data->type_id,
-                'user_id' => $data->user_id,
-                'type' => $data->type
+                'type_id' => $data['type_id'],
+                'user_id' => UserData::getUser()->id,
+                'type' => $data['type']
             ]);
             $action = true;
         } else {
@@ -51,10 +56,10 @@ class LikeRepository
             'count' => $like
                 ->get()
                 ->count(),
-            'type' => $data->type,
+            'type' => $data['type'],
             'action' => $action,
-            'type_id' => $data->type_id,
-            'wall_id' => $data->wall_id
+            'type_id' => $data['type_id'],
+            'wall_id' => (isset($data['wall_id'])) ? $data['wall_id'] : null
         ];
     }
 }

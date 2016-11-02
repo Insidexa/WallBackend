@@ -1,6 +1,6 @@
 <?php
-print_r(posix_getgrgid(posix_getegid()));
-/**s @var Dingo\Api\Routing\Router $api */
+
+/** @var Dingo\Api\Routing\Router $api */
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
@@ -9,7 +9,7 @@ $api->version('v1', function ($api) {
     $api->group([
         'namespace' => 'App\Http\Controllers',
         'middleware' => \Barryvdh\Cors\HandleCors::class,
-        'domain' => 'wall-backend.jashka'], function ($api) {
+        'domain' => 'localhost'], function ($api) {
         /** @var Dingo\Api\Routing\Router $api */
         $api->get('/', 'HomeController@index');
         $api->post('signin', 'Auth\AuthController@signin');
@@ -19,7 +19,11 @@ $api->version('v1', function ($api) {
             $api) {
             /** @var Dingo\Api\Routing\Router $api */
 
-
+            $api->resource('walls', 'WallController');
+            $api->resource('comments', 'CommentController');
+            $api->delete('comments/{id}/{wallId}', 'CommentController@destroy');
+            $api->resource('ignores', 'IgnoreController');
+            $api->resource('likes', 'LikeController');
         });
 
     });

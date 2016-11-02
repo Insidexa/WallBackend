@@ -26,6 +26,21 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        //
+        \Gate::define('update-comment', function ($user, $commentUserId) {
+            return $user->id == $commentUserId;
+        });
+
+        \Gate::define('delete-comment', function ($user, $commentUserId) {
+            return $user->id == $commentUserId;
+        });
+
+        \Gate::define('update-post', function ($user, $postUserId) {
+            echo $user->id  . '-' . $postUserId;
+            return $user->id == $postUserId;
+        });
+
+        \Gate::define('delete-post', function ($user, $postUserId) {
+            return $user->id == $postUserId;
+        });
     }
 }

@@ -19,12 +19,12 @@ class ImageRepository
 {
 
     /**
-     * @param \stdClass $wallData
+     * @param array $wallData
      */
     public static function checkImages ($wallData) {
-        if (property_exists($wallData, 'removeImages') && count($wallData->removeImages) > 0)
-            Image::destroy($wallData->removeImages);
-        static::create($wallData, $wallData->id);
+        if (isset($wallData['removeImages']) && count($wallData['removeImages']) > 0)
+            Image::destroy($wallData['removeImages']);
+        static::create($wallData, $wallData['id']);
     }
     
     /**
@@ -35,16 +35,16 @@ class ImageRepository
     }
 
     /**
-     * @param \stdClass $wallData
+     * @param array $wallData
      * @param int $wallId
      */
     public static function create ($wallData, $wallId) {
         $images = [];
 
-        foreach($wallData->images as $image) {
-            if (property_exists($image, 'image')) {
+        foreach($wallData['images'] as $image) {
+            if ($image['image']) {
                 $images[] = [
-                    'path' => ImageFromBase64::convertAndSave($image->image),
+                    'path' => ImageFromBase64::convertAndSave($image['image']),
                     'wall_id' => $wallId,
                     'name' => ''
                 ];

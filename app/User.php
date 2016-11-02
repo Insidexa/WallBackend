@@ -24,6 +24,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Wall[] $walls
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Like[] $likes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
  */
 class User extends Authenticatable
 {

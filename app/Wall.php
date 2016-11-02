@@ -2,7 +2,10 @@
 
 namespace App;
 
+use Helpers\UserData;
 use Illuminate\Database\Eloquent\Model;
+
+use Socket\WallSocket;
 
 /**
  * App\Wall
@@ -30,6 +33,10 @@ class Wall extends Model
     protected $fillable = ['user_id', 'text'];
     protected $appends = ['likes', 'is_liked'];
 
+    public static $rules = [
+        'text' => 'required|min:1'
+    ];
+
     public function toArray()
     {
         $array = parent::toArray();
@@ -46,17 +53,24 @@ class Wall extends Model
 
     public function getIsLikedAttribute()
     {
-        return Like::whereUserId(1)->whereType('wall')->whereTypeId($this->id)->count();
+        return Like::whereUserId(UserData::getUser()->id)
+            ->whereType('wall')
+            ->whereTypeId($this->id)
+            ->count();
     }
 
     public function getLikesAttribute()
     {
-        return Like::whereType('wall')->whereTypeId($this->id)->count();
+        return Like::whereType('wall')
+            ->whereTypeId($this->id)
+            ->count();
     }
 
     public function getIsNoInterestingAttribute()
     {
-        return Ignore::whereUserId(1)->whereWallId($this->id)->count();
+        return Ignore::whereUserId(UserData::getUser()->id)
+            ->whereWallId($this->id)
+            ->count();
     }
     
     public function comments()

@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2016-10-30.
+    * Generated on 2016-11-02.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -80,6 +80,7 @@ namespace PHPSTORM_META {
             'Tymon\JWTAuth\Validators\PayloadValidator' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'Illuminate\Broadcasting\BroadcastManager' instanceof \Illuminate\Broadcasting\BroadcastManager,
             'Illuminate\Bus\Dispatcher' instanceof \Illuminate\Bus\Dispatcher,
+            'Collective\Bus\Dispatcher' instanceof \Collective\Bus\Dispatcher,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
             'memcached.connector' instanceof \Illuminate\Cache\MemcachedConnector,
@@ -231,6 +232,7 @@ namespace PHPSTORM_META {
             'Tymon\JWTAuth\Validators\PayloadValidator' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'Illuminate\Broadcasting\BroadcastManager' instanceof \Illuminate\Broadcasting\BroadcastManager,
             'Illuminate\Bus\Dispatcher' instanceof \Illuminate\Bus\Dispatcher,
+            'Collective\Bus\Dispatcher' instanceof \Collective\Bus\Dispatcher,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
             'memcached.connector' instanceof \Illuminate\Cache\MemcachedConnector,
@@ -382,6 +384,7 @@ namespace PHPSTORM_META {
             'Tymon\JWTAuth\Validators\PayloadValidator' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'Illuminate\Broadcasting\BroadcastManager' instanceof \Illuminate\Broadcasting\BroadcastManager,
             'Illuminate\Bus\Dispatcher' instanceof \Illuminate\Bus\Dispatcher,
+            'Collective\Bus\Dispatcher' instanceof \Collective\Bus\Dispatcher,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
             'memcached.connector' instanceof \Illuminate\Cache\MemcachedConnector,
@@ -533,6 +536,7 @@ namespace PHPSTORM_META {
             'Tymon\JWTAuth\Validators\PayloadValidator' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'Illuminate\Broadcasting\BroadcastManager' instanceof \Illuminate\Broadcasting\BroadcastManager,
             'Illuminate\Bus\Dispatcher' instanceof \Illuminate\Bus\Dispatcher,
+            'Collective\Bus\Dispatcher' instanceof \Collective\Bus\Dispatcher,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
             'memcached.connector' instanceof \Illuminate\Cache\MemcachedConnector,

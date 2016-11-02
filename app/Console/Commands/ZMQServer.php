@@ -49,16 +49,14 @@ class ZMQServer extends Command
         $loop   = Factory::create();
         $pusher = new Pusher;
 
-// Listen for the web server to make a ZeroMQ push after an ajax request
         $context = new Context($loop);
         $pull = $context->getSocket(\ZMQ::SOCKET_PULL);
-        $pull->bind('tcp://127.0.0.1:5555'); // Binding to 127.0.0.1 means the only client that can connect is itself
+        $pull->bind('tcp://127.0.0.1:5555');
         $pull->on('message', array($pusher, 'onBlogEntry'));
 
-// Set up our WebSocket server for clients wanting real-time updates
         $webSock = new Server($loop);
-        $webSock->listen(8080, '0.0.0.0'); // Binding to 0.0.0.0 means remotes can connect
-        $webServer = new IoServer(
+        $webSock->listen(8080, '0.0.0.0');
+        new IoServer(
             new HttpServer(
                 new WsServer(
                     new WampServer(

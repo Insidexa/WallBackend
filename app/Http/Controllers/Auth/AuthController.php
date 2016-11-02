@@ -15,13 +15,6 @@ use Illuminate\Foundation;
 
 class AuthController extends Controller
 {
-    protected $user = null;
-    
-    public function __construct()
-    {
-        $this->user = JWTAuth::parseToken()->authenticate();
-    }
-
     public function signin(Request $request, $user = null) {
         $credentials = $request->only('email', 'password');
 
@@ -34,7 +27,7 @@ class AuthController extends Controller
         }
 
         if ($user === null)
-            $user = $this->user;
+            $user = JWTAuth::parseToken()->authenticate();
 
         return response()->json(compact('token', 'user'));
     }

@@ -35,7 +35,7 @@
         },
         "files": [
             "app/Helpers/ImageFromBase64.php",
-            "app/Helpers/Pusher.php"
+            "app/Helpers/UserData.php"
         ]
     },
     "autoload-dev": {

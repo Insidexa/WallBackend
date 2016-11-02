@@ -15,9 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\RunSocket::class,
         ZMQServer::class,
-        Send::class
     ];
 
     /**
