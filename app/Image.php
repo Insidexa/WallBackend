@@ -30,7 +30,7 @@ class Image extends Model
         parent::boot();
 
         static::deleting(function($image) {
-            $path = public_path() . '/' . $image->path;
+            $path = public_path() . '/' . $image['path'];
             if (\File::exists($path))
                 \File::delete($path);
         });

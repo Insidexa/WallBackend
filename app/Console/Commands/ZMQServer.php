@@ -48,14 +48,14 @@ class ZMQServer extends Command
     {
         $loop   = Factory::create();
         $pusher = new Pusher;
-
+        
         $context = new Context($loop);
         $pull = $context->getSocket(\ZMQ::SOCKET_PULL);
-        $pull->bind('tcp://127.0.0.1:5555');
+        $pull->bind(config('zmq_socket.url') . ':' . config('zmq_socket.port'));
         $pull->on('message', array($pusher, 'onBlogEntry'));
 
         $webSock = new Server($loop);
-        $webSock->listen(8080, '0.0.0.0');
+        $webSock->listen(config('zmq_socket.ws_port'), '0.0.0.0');
         new IoServer(
             new HttpServer(
                 new WsServer(

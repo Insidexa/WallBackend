@@ -24,7 +24,7 @@ class ZMQSend
      */
     public static function send($data) {
         try {
-            $data['category'] = 'wall';
+            $data['category'] = config('zmq_socket.push_channel');
             self::getConnection()->send(json_encode($data));
         } catch (\Exception $e) {
             echo $e->getMessage();
@@ -38,7 +38,7 @@ class ZMQSend
         if (self::$connection === null) {
             $context = new \ZMQContext();
             $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, 'my pusher');
-            self::$connection = $socket->connect("tcp://localhost:5555");
+            self::$connection = $socket->connect(config('zmq_socket.url') . ':' . config('zmq_socket.port'));
         }
         
         return self::$connection;

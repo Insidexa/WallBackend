@@ -9,7 +9,7 @@ $api->version('v1', function ($api) {
     $api->group([
         'namespace' => 'App\Http\Controllers',
         'middleware' => \Barryvdh\Cors\HandleCors::class,
-        'domain' => 'localhost'], function ($api) {
+        'domain' => config('app.url')], function ($api) {
         /** @var Dingo\Api\Routing\Router $api */
         $api->get('/', 'HomeController@index');
         $api->post('signin', 'Auth\AuthController@signin');
