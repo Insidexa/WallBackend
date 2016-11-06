@@ -11,7 +11,7 @@ $api->version('v1', function ($api) {
         'middleware' => \Barryvdh\Cors\HandleCors::class,
         'domain' => config('app.url')], function ($api) {
         /** @var Dingo\Api\Routing\Router $api */
-        $api->get('/', 'HomeController@index');
+
         $api->post('signin', 'Auth\AuthController@signin');
         $api->post('signup', 'Auth\AuthController@signup');
 

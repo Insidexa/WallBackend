@@ -5,8 +5,6 @@ namespace App;
 use Helpers\UserData;
 use Illuminate\Database\Eloquent\Model;
 
-use Socket\WallSocket;
-
 /**
  * App\Wall
  *

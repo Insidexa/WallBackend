@@ -10,7 +10,6 @@ namespace Repositories;
 
 use App\Comment;
 use Helpers\UserData;
-use Socket\WallSocket;
 
 /**
  * Class CommentRepository
@@ -65,16 +64,21 @@ class CommentRepository
      */
     public static function create(array $commentData)
     {
-        $parentId = 0;
-
-        if (isset($commentData['comment']['parent_id']))
-            $parentId = $commentData['comment']['parent_id'];
-
-        return Comment::create([
+        $comment = [
             'user_id' => UserData::getUser()->id,
             'wall_id' => $commentData['wall_id'],
             'text' => $commentData['comment']['text'],
-            'parent_id' => $parentId
-        ]);
+            'parent_id' => $commentData['comment']['parent_id']
+        ];
+
+        if ($commentData['comment']['parent_id'] === null) {
+            $comment = Comment::create($comment);
+            $comment->makeRoot();
+        } else {
+            $root = Comment::whereId($commentData['comment']['parent_id'])->first();
+            $comment = $root->children()->create($comment);
+        }
+        
+        return $comment;
     }
 }
