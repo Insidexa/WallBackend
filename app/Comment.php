@@ -49,6 +49,8 @@ class Comment extends Node
 
     protected $parentColumn = 'parent_id';
 
+    protected $orderColumn = 'lft';
+
     // 'lft' column name
     protected $leftColumn = 'lft';
 

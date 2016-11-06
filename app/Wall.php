@@ -100,7 +100,7 @@ class Wall extends Model
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->orderBy('rgt', 'DESC');
     }
 
     /**

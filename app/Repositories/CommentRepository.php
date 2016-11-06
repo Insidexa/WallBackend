@@ -22,7 +22,7 @@ class CommentRepository
      * @return \Illuminate\Database\Eloquent\Collection|mixed|static[]
      */
     public static function getUserId ($id) {
-        return Comment::select(['user_id'])->find($id)->first()->user_id;
+        return Comment::select(['user_id'])->whereId($id)->first()->user_id;
     }
     
     /**
@@ -49,13 +49,31 @@ class CommentRepository
 
     /**
      * @param $id
-     * @param $wallId
+     * @return array
+     * @throws \Exception
      */
-    public static function delete($id, $wallId)
+    public static function delete($id)
     {
-        Comment::whereId($id)
-            ->whereWallId($wallId)
-            ->delete();
+        $ids = [];
+
+        $comment = Comment::whereParentId($id)->first();
+        
+        if ($comment !== null) {
+            $childComments = $comment->getDescendantsAndSelf()->all();
+
+            foreach ($childComments as $comment) {
+                /** @var \App\Comment $comment */
+                $ids[] = $comment->id;
+            }
+        }
+        
+        Comment::whereId($id)->first()->delete();
+        \DB::table('comments')->whereIn('id', $ids)->delete();
+        $ids[] = (int)$id;
+
+        Comment::rebuild();
+
+        return $ids;
     }
 
     /**

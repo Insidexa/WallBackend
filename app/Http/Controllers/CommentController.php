@@ -65,12 +65,12 @@ class CommentController extends Controller
             return response([], 403);
         }        
         
-        CommentRepository::delete($id, $wallId);
+        $ids = CommentRepository::delete($id, $wallId);
         LikeRepository::deleteWhereData($id);
         ZMQSend::send([
             'response' => [
                 'wall_id' => $wallId,
-                'comment_id' => $id
+                'comment_ids' => $ids
             ],
             'action' => 'client_remove_comment'
         ]);
