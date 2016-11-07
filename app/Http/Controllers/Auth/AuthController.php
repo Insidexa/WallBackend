@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use Dingo\Api\Facade\API;
-use Helpers\UserData;
-use Illuminate\Validation\Validator;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation;

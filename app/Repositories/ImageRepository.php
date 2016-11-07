@@ -8,7 +8,7 @@
 
 namespace Repositories;
 
-use App\Image;
+use App\Models\Image;
 use Helpers\ImageFromBase64;
 
 /**

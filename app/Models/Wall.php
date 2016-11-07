@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Helpers\UserData;
 use Illuminate\Database\Eloquent\Model;
@@ -14,15 +14,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $text
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Wall whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Wall whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Wall whereText($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Wall whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Wall whereUpdatedAt($value)
- * @property-read \App\User $user
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Wall whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Wall whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Wall whereText($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Wall whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Wall whereUpdatedAt($value)
+ * @property-read \App\Models\User $user
  * @property-read mixed $likes
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Image[] $images
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Image[] $images
  * @property-read mixed $is_liked
  * @property-read mixed $is_no_interesting
  */

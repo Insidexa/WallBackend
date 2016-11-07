@@ -32,7 +32,8 @@
         "psr-4": {
             "App\\": "app/",
             "Repositories\\": "app/Repositories/",
-            "Socket\\": "app/Socket/"
+            "Socket\\": "app/Socket/",
+            "App\\Models\\": "app/Models/"
         },
         "files": [
             "app/Helpers/ImageFromBase64.php",

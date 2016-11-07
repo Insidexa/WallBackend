@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ignore;
 use Helpers\UserData;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,7 @@ class IgnoreController extends Controller
      */
     public function store(Request $request)
     {
-        \App\Ignore::create([
+        Ignore::create([
             'user_id' => UserData::getUser()->id,
             'wall_id' => $request->get('id')
         ]);

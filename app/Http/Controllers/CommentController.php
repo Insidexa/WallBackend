@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
+use App\Models\Comment;
 use Helpers\UserData;
 use Illuminate\Http\Request;
 
@@ -65,7 +65,7 @@ class CommentController extends Controller
             return response([], 403);
         }        
         
-        $ids = CommentRepository::delete($id, $wallId);
+        $ids = CommentRepository::delete($id);
         LikeRepository::deleteWhereData($id);
         ZMQSend::send([
             'response' => [

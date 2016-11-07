@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -15,16 +15,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Wall[] $walls
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Like[] $likes
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Wall[] $walls
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Like[] $likes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
  */
 class User extends Authenticatable
 {

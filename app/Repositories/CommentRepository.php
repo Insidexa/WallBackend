@@ -8,7 +8,7 @@
 
 namespace Repositories;
 
-use App\Comment;
+use App\Models\Comment;
 use Helpers\UserData;
 
 /**
@@ -62,7 +62,7 @@ class CommentRepository
             $childComments = $comment->getDescendantsAndSelf()->all();
 
             foreach ($childComments as $comment) {
-                /** @var \App\Comment $comment */
+                /** @var \App\Models\Comment $comment */
                 $ids[] = $comment->id;
             }
         }

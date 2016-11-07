@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Baum\Node;
 use Helpers\UserData;
@@ -22,19 +22,19 @@ use Helpers\UserData;
  * @property-read mixed $is_liked
  * @property-read mixed $likes
  * @property-read mixed $user
- * @property-read \App\Wall $wall
- * @property-read \App\Comment $parent
- * @property-read \Baum\Extensions\Eloquent\Collection|\App\Comment[] $children
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereWallId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereParentId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereText($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereLft($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereRgt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Comment whereDepth($value)
+ * @property-read \App\Models\Wall $wall
+ * @property-read \App\Models\Comment $parent
+ * @property-read \Baum\Extensions\Eloquent\Collection|\App\Models\Comment[] $children
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Comment whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Comment whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Comment whereWallId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Comment whereParentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Comment whereText($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Comment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Comment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Comment whereLft($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Comment whereRgt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Comment whereDepth($value)
  * @method static \Illuminate\Database\Query\Builder|\Baum\Node withoutNode($node)
  * @method static \Illuminate\Database\Query\Builder|\Baum\Node withoutSelf()
  * @method static \Illuminate\Database\Query\Builder|\Baum\Node withoutRoot()

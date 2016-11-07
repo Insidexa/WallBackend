@@ -8,10 +8,9 @@
 
 namespace Repositories;
 
-use \App\Wall;
+use \App\Models\Wall;
 
 use Helpers\UserData;
-use Socket\WallSocket;
 
 /**
  * Class WallRepository

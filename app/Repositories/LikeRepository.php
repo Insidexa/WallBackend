@@ -8,7 +8,7 @@
 
 namespace Repositories;
 
-use \App\Like;
+use \App\Models\Like;
 use Helpers\UserData;
 
 /**
