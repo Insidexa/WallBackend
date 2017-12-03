@@ -9,7 +9,6 @@ sudo dnf install php-zmq-1.0.8-10.fc24.x86_64 // fedora 24
 ```
 composer install
 ```
-```
 #### Создаем таблицы
 ```
 php artisan migrate
